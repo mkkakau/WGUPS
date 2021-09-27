@@ -1,12 +1,4 @@
-class HashItemNode:
-    """A class representing a hash item node."""
-
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-
-    def __repr__(self):
-        return "[key: " + str(self.key) + ", value: " + str(self.value) + "]"
+import hashitemnode
 
 
 class HashTable:
@@ -32,7 +24,7 @@ class HashTable:
             if b.key == key:
                 b.value = value
                 return True
-        new_item = HashItemNode(key, value)
+        new_item = hashitemnode.HashItemNode(key, value)
         bucket_list.append(new_item)
         return True
 
