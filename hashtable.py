@@ -54,15 +54,3 @@ class HashTable:
 
     def __repr__(self):
         return str(self.buckets)
-
-
-test_hash = HashTable()
-test_hash.insert(32, "hi")
-test_hash.insert(32, "hi2")
-test_hash.insert(42, "hi3")
-test_hash.insert(33, "boop")
-searched = test_hash.search(32)
-print(test_hash)
-print(searched)
-print("Removed = " + str(test_hash.remove(42)))
-print(test_hash)
