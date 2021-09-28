@@ -2,7 +2,7 @@ import csv
 
 
 class Distance():
-    """A class """
+    """A class holding all distance data betweeen all locations"""
 
     def __init__(self, filename):
         self.filename = filename
@@ -27,7 +27,3 @@ class Distance():
                         continue
                     else:
                         self.add_distance(id1, i, distance)
-
-
-d = Distance("distances.csv")
-print(d.list[6][27])
