@@ -34,6 +34,7 @@ class Package():
         self.mass = mass
         self.note = note
         self.priority = self._get_priority(self.deadline)
+        self.status = Status.AT_THE_HUB
 
     def _convert_deadline(self, deadline):
         format_data = "%H:%M %p"
@@ -47,9 +48,3 @@ class Package():
         if deadline == "10:30 AM":
             priority = Priority.MEDIUM
         return priority
-
-
-status1 = Status.AT_THE_HUB
-status2 = Status.DELIVERED
-
-print(status1)
