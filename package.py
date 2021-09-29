@@ -10,6 +10,20 @@ class Priority(Enum):
     LOW = 1
 
 
+class Status(Enum):
+    """An enumerator representing package delivery status."""
+
+    AT_THE_HUB = 0
+    EN_ROUTE = 1
+    DELIVERED = 2
+
+    def __repr__(self):
+        return self.name.replace("_", " ")
+
+    def __str__(self):
+        return self.__repr__()
+
+
 class Package():
     """A class representing a Package"""
 
@@ -33,3 +47,9 @@ class Package():
         if deadline == "10:30 AM":
             priority = Priority.MEDIUM
         return priority
+
+
+status1 = Status.AT_THE_HUB
+status2 = Status.DELIVERED
+
+print(status1)
