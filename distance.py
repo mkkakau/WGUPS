@@ -6,15 +6,15 @@ class Distance():
 
     def __init__(self, filename):
         self.filename = filename
-        self.list = [[None for x in range(28)] for i in range(28)]
+        self.all = [[None for x in range(28)] for i in range(28)]
         self._load_list(filename)
 
     def add_distance(self, loc_id1, loc_id2, distance):
-        self.list[loc_id1][loc_id2] = distance
-        self.list[loc_id2][loc_id1] = distance
+        self.all[loc_id1][loc_id2] = distance
+        self.all[loc_id2][loc_id1] = distance
 
     def get_distance(self, location1, location2):
-        return self.list[location1.id][location2.id]
+        return self.all[location1.id][location2.id]
 
     def _load_list(self, filename):
         with open(filename) as csv_file:
