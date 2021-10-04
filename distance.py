@@ -1,7 +1,7 @@
 import csv
 
 
-class Distance():
+class DistanceList():
     """A class holding all distance data betweeen all locations"""
 
     def __init__(self, filename):
@@ -13,8 +13,8 @@ class Distance():
         self.all[loc_id1][loc_id2] = distance
         self.all[loc_id2][loc_id1] = distance
 
-    def get_distance(self, location1, location2):
-        return self.all[location1.id][location2.id]
+    def get_distance(self, loc_id1, loc_id2):
+        return self.all[loc_id1][loc_id2]
 
     def _load_list(self, filename):
         with open(filename) as csv_file:
