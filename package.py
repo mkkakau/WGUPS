@@ -1,5 +1,7 @@
 from enum import Enum
 from datetime import datetime
+from hashtable import HashTable
+import csv
 
 
 class Priority(Enum):
@@ -48,3 +50,37 @@ class Package():
         if deadline == "10:30 AM":
             priority = Priority.MEDIUM
         return priority
+
+
+class PackageList():
+    """A class representing a list of packages."""
+
+    def __init__(self, filename):
+        self.filename = filename
+        self.all = self._load_list(filename)
+
+    def _load_list(self, filename):
+
+        truck1 = HashTable()
+        truck2 = HashTable()
+        truck3 = HashTable()
+
+        with open(filename) as csv_file:
+            reader = csv.reader(csv_file, delimiter=",")
+            next(reader)
+            for row in reader:
+                id = int(row[0])
+                location_id = int(row[1])
+                deadline = row[2]
+                mass = row[3]
+                note = row[4]
+                package = Package(id, location_id, deadline, mass, note)
+                truck1.insert(id, package)
+        list = [None, truck1, truck2, truck3]
+        return list
+
+    def get(self, truck_id):
+        return self.all[truck_id]
+
+
+p = PackageList("packages.csv")
