@@ -20,7 +20,7 @@ class Location():
         text += "State: " + self.state + ", "
         text += "Zipcode: " + self.zipcode + ", "
         text += "Name: " + self.name
-        return "[" + text + "]"
+        return "{" + text + "}"
 
 
 class LocationList():
