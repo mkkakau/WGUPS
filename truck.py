@@ -37,14 +37,16 @@ class Truck():
         self.add_time(time_change)
         self.current_loc = location_id
 
-    # O(2n)
+    # O(n)
     def start(self):
-        # O(n) Set status of all packages to EN_ROUTE
+        # O(n)
+        # Set status of all packages to EN_ROUTE
         for k in self.packages.get_keys():
             package = self.packages.search(k).value
             package.status = Status.EN_ROUTE
 
         # O(n)
+        # Deliver packages
         for next in self.path:
             self.go_to(next)
             package = self.packages.search(next)

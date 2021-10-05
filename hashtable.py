@@ -4,6 +4,7 @@ import hashitemnode
 class HashTable:
     """A class representing a hash table."""
 
+    # O(1)
     def __init__(self, initial_size=10):
         self.initial_size = initial_size
         self.buckets = []
@@ -12,16 +13,20 @@ class HashTable:
             new_bucket = []
             self.buckets.append(new_bucket)
 
+    # O(1)
     def get_keys(self):
         return self.keys
 
+    # O(1)
     def generate_hash_key(self, key):
         return hash(key) % len(self.buckets)
 
+    # O(1)
     def get_bucket(self, key):
         hash_key = self.generate_hash_key(key)
         return self.buckets[hash_key]
 
+    # O(n)
     def insert(self, key, value):
         bucket_list = self.get_bucket(key)
         for b in bucket_list:
@@ -33,6 +38,7 @@ class HashTable:
         self.keys.append(key)
         return True
 
+    # O(n)
     def search(self, key):
         bucket_list = self.get_bucket(key)
         for b in bucket_list:
@@ -40,6 +46,7 @@ class HashTable:
                 return b
         return None
 
+    # O(n)
     def remove(self, key):
         bucket_list = self.get_bucket(key)
         item_node = self.search(key)
@@ -49,5 +56,6 @@ class HashTable:
         else:
             return False
 
+    # O(1)
     def __repr__(self):
         return str(self.buckets)
