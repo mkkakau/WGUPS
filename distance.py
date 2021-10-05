@@ -26,4 +26,4 @@ class DistanceList():
                     if i == 0:
                         continue
                     else:
-                        self.add_distance(id1, i, distance)
+                        self.add_distance(id1, i, float(distance))

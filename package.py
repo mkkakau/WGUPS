@@ -30,8 +30,8 @@ class Package():
     """A class representing a Package"""
 
     def __init__(self, id, location_id, deadline, mass, note=""):
-        self.id = id
-        self.location_id = location_id
+        self.id = int(id)
+        self.location_id = int(location_id)
         self.deadline = self._convert_deadline(deadline)
         self.mass = mass
         self.note = note
@@ -79,8 +79,6 @@ class PackageList():
         list = [None, truck1, truck2, truck3]
         return list
 
+    # O(1)
     def get(self, truck_id):
         return self.all[truck_id]
-
-
-p = PackageList("packages.csv")
