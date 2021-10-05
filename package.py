@@ -51,6 +51,20 @@ class Package():
             priority = Priority.MEDIUM
         return priority
 
+    def __repr__(self):
+        text = ""
+        text += "ID: " + str(self.id) + ", "
+        text += "Location ID: " + str(self.location_id) + ", "
+        text += "Deadline: " + str(self.deadline) + ", "
+        text += "Mass: " + self.mass + ", "
+        text += "Note: " + self.note + ", "
+        text += "Status: " + str(self.status) + ", "
+        text += "Priority: " + str(self.priority)
+        return "{" + text + "}"
+
+    def __str__(self):
+        return self.__repr__()
+
 
 class PackageList():
     """A class representing a list of packages."""

@@ -40,16 +40,15 @@ class Truck():
     # O(2n)
     def start(self):
         # O(n) Set status of all packages to EN_ROUTE
-        for p in enumerate(self.packages):
-            p.status = Status.EN_ROUTE
+        for k in self.packages.get_keys():
+            package = self.packages.search(k).value
+            package.status = Status.EN_ROUTE
 
         # O(n)
         for next in self.path:
             self.go_to(next)
             package = self.packages.search(next)
             package.status = Status.DELIVERED
-            print(package)
-            print(package.status)
 
 
 t = Truck(1, data.packages.get(1), datetime.combine(

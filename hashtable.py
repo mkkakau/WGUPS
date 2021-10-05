@@ -7,9 +7,13 @@ class HashTable:
     def __init__(self, initial_size=10):
         self.initial_size = initial_size
         self.buckets = []
+        self.keys = []
         for i in range(0, self.initial_size):
             new_bucket = []
             self.buckets.append(new_bucket)
+
+    def get_keys(self):
+        return self.keys
 
     def generate_hash_key(self, key):
         return hash(key) % len(self.buckets)
@@ -26,6 +30,7 @@ class HashTable:
                 return True
         new_item = hashitemnode.HashItemNode(key, value)
         bucket_list.append(new_item)
+        self.keys.append(key)
         return True
 
     def search(self, key):
