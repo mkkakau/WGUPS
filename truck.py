@@ -49,8 +49,10 @@ class Truck():
         # Deliver packages
         for next in self.path:
             self.go_to(next)
-            package = self.packages.search(next)
-            package.status = Status.DELIVERED
+            package = self.packages.search(next).value
+            package.set_delivered(self.end_time)
+            print(package)
+            print("Delivered at" + str(package.delivery_time))
 
 
 t = Truck(1, data.packages.get(1), datetime.combine(
