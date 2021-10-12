@@ -41,8 +41,9 @@ class Package():
 
     def _convert_deadline(self, deadline):
         format_data = "%H:%M %p"
-        formatted_deadline = datetime.strptime(deadline, format_data).time()
-        return formatted_deadline
+        time = datetime.strptime(deadline, format_data).time()
+        formatted = datetime.combine(datetime.now(), time)
+        return formatted
 
     def _get_priority(self, deadline):
         priority = Priority.LOW
@@ -55,6 +56,12 @@ class Package():
     def set_delivered(self, time):
         self.delivery_time = time
         self.status = Status.DELIVERED
+
+    def check_on_time(self):
+        if self.delivery_time is None:
+            print("Package has not been delivered. Cannot calculate on_time()")
+        if self.delivery_time > self.deadline:
+            print("Package " + str(self.id) + " did not meet deadline.")
 
     def __repr__(self):
         text = ""
@@ -93,8 +100,16 @@ class PackageList():
                 deadline = row[2]
                 mass = row[3]
                 note = row[4]
+                truck = int(row[5])
                 package = Package(id, location_id, deadline, mass, note)
-                truck1.insert(id, package)
+                if truck == 1:
+                    truck1.insert(id, package)
+                elif truck == 2:
+                    truck2.insert(id, package)
+                elif truck == 3:
+                    truck3.insert(id, package)
+                else:
+                    print("Unassigned package" + str(package))
         list = [None, truck1, truck2, truck3]
         return list
 
