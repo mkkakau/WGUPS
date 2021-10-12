@@ -1,5 +1,5 @@
 from enum import Enum
-from datetime import datetime
+from datetime import datetime, date, time
 from hashtable import HashTable
 import csv
 
@@ -47,9 +47,10 @@ class Package():
 
     def _get_priority(self, deadline):
         priority = Priority.LOW
-        if deadline == "9:00 AM":
+        today = date.today()
+        if deadline == datetime.combine(today, time(hour=9)):
             priority = Priority.HIGH
-        if deadline == "10:30 AM":
+        if deadline == datetime.combine(today, time(hour=10, minute=30)):
             priority = Priority.MEDIUM
         return priority
 

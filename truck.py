@@ -19,7 +19,7 @@ class Truck():
         self.is_returning = is_returning
 
     def _calculate_path(self):
-        return nn.nearest_neighbor(self.packages)
+        return nn.calculate(self.packages)
 
     def add_distance(self, distance):
         self.total_distance += distance
@@ -54,6 +54,9 @@ class Truck():
             self.go_to(package.location_id)
             package.set_delivered(self.end_time)
             package.check_on_time()
+            print("Truck " + str(self.id) + " delivered package "
+                  + str(package.id) + " to location id "
+                  + str(package.location_id))
 
         if self.is_returning:
             self.go_to(data.HUB_ID)
