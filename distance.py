@@ -10,8 +10,8 @@ class DistanceList():
         self._load_list(filename)
 
     def add_distance(self, loc_id1, loc_id2, distance):
-        self.all[loc_id1][loc_id2] = distance
-        self.all[loc_id2][loc_id1] = distance
+        self.all[loc_id1][loc_id2] = float(distance)
+        self.all[loc_id2][loc_id1] = float(distance)
 
     def get_distance(self, loc_id1, loc_id2):
         return self.all[loc_id1][loc_id2]

@@ -1,23 +1,25 @@
-from datetime import timedelta, time, datetime, date
+from datetime import timedelta
 import data
+import nearestneighbor as nn
 from package import Status
 
 
 class Truck():
     """A class representing a truck"""
 
-    def __init__(self, id, packages, start_time):
+    def __init__(self, id, packages, start_time, is_returning=False):
         self.id = id
-        self.speed = 18
-        self.total_distance = 0
+        self.speed = float(18.0)
+        self.total_distance = float(0.0)
         self.start_time = start_time
         self.end_time = start_time
-        self.current_loc = 1
+        self.current_loc = data.HUB_ID
         self.packages = packages
-        self.path = self._calculate_path(packages)
+        self.path = self._calculate_path()
+        self.is_returning = is_returning
 
-    def _calculate_path(self, packages):
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def _calculate_path(self):
+        return nn.nearest_neighbor(self.packages)
 
     def add_distance(self, distance):
         self.total_distance += distance
@@ -48,14 +50,10 @@ class Truck():
         # O(n)
         # Deliver packages
         for next in self.path:
-            self.go_to(next)
             package = self.packages.search(next).value
+            self.go_to(package.location_id)
             package.set_delivered(self.end_time)
-            print(package)
-            print("Delivered at" + str(package.delivery_time))
+            package.check_on_time()
 
-
-t = Truck(1, data.packages.get(1), datetime.combine(
-    date.today(), time(hour=8)))
-print(t._calculate_time_change(0.6))
-t.start()
+        if self.is_returning:
+            self.go_to(data.HUB_ID)
