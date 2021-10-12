@@ -6,3 +6,4 @@ from location import LocationList
 locations = LocationList("locations.csv")
 distances = DistanceList("distances.csv")
 packages = PackageList("packages.csv")
+HUB_ID = 1
