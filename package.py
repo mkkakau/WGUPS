@@ -1,6 +1,7 @@
 from enum import Enum
 from datetime import datetime, date, time
 from hashtable import HashTable
+import data
 import csv
 
 
@@ -75,15 +76,19 @@ class Package():
             print("Package " + str(self.id) + " did not meet deadline.")
 
     def __repr__(self):
-        text = ""
-        text += "ID: " + str(self.id) + ", "
-        text += "Location ID: " + str(self.location_id) + ", "
-        text += "Deadline: " + str(self.deadline) + ", "
-        text += "Mass: " + self.mass + ", "
-        text += "Note: " + self.note + ", "
-        text += "Status: " + str(self.status) + ", "
-        text += "Priority: " + str(self.priority)
-        return "{" + text + "}"
+        location = data.locations.get(self.location_id)
+        dt_format = "%H:%M:%S"
+        formatted = ""
+        formatted += f"{self.id:0>2}" + "  "
+        formatted += f"{location.address:<38}" + "  "
+        formatted += f"{location.city:<16}" + "  "
+        formatted += f"{location.zipcode:<5}" + "  "
+        formatted += f"{self.mass:>4}" + "  "
+        formatted += self.deadline.strftime(dt_format) + "  "
+        formatted += f"{self.status:<9}" + "  "
+        if self.delivery_time is not None:
+            formatted += f"{self.delivery_time.strftime(dt_format)}"
+        return formatted
 
     def __str__(self):
         return self.__repr__()
