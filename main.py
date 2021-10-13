@@ -22,7 +22,7 @@ print("Distance travelled " + str(truck2.total_distance))
 
 print("Updating package 9 location address")
 data.packages.get(3).search(9).value.location_id = 20
-print(data.packages.get(3).search(9))
+
 truck3 = Truck(3, data.packages.get(3), datetime.combine(
     date.today(), time(hour=10, minute=20)))
 truck3.start()

@@ -36,7 +36,6 @@ class Truck():
     def go_to(self, location_id):
         distance = data.distances.get_distance(self.current_loc, location_id)
         self.add_distance(distance)
-        print("Distance travelled: " + str(distance))
         time_change = self._calculate_time_change(distance)
         self.add_time(time_change)
         self.current_loc = location_id
@@ -56,10 +55,6 @@ class Truck():
             self.go_to(package.location_id)
             package.set_delivered(self.end_time)
             package.check_on_time()
-            print("Truck " + str(self.id) + " delivered package "
-                  + str(package.id) + " to location id "
-                  + str(package.location_id) + ". Distance total: "
-                  + str(self.total_distance))
 
         if self.is_returning:
             self.go_to(data.HUB_ID)

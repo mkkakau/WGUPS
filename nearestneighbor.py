@@ -11,15 +11,12 @@ def calculate(packages):
     low = get_priority_queue(Priority.LOW, queue)
 
     full_path.extend(nearest_neighbor(high, next_loc_id))
-    print(full_path)
     if full_path != []:
         next_loc_id = packages.search(full_path[-1]).value.location_id
     full_path.extend(nearest_neighbor(med, next_loc_id))
-    print(full_path)
     if full_path != []:
         next_loc_id = packages.search(full_path[-1]).value.location_id
     full_path.extend(nearest_neighbor(low, next_loc_id))
-    print(full_path)
     return full_path
 
 
