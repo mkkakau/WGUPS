@@ -1,5 +1,6 @@
 from datetime import timedelta
 import data
+from decimal import Decimal
 import nearestneighbor as nn
 from package import Status
 
@@ -9,8 +10,8 @@ class Truck():
 
     def __init__(self, id, packages, start_time, is_returning=False):
         self.id = id
-        self.speed = float(18.0)
-        self.total_distance = float(0.0)
+        self.speed = Decimal(18.0)
+        self.total_distance = Decimal(0.0)
         self.start_time = start_time
         self.end_time = start_time
         self.current_loc = data.HUB_ID
@@ -29,12 +30,13 @@ class Truck():
 
     def _calculate_time_change(self, distance):
         hours_elapsed = distance / self.speed
-        change = timedelta(hours=hours_elapsed)
+        change = timedelta(hours=float(hours_elapsed))
         return change
 
     def go_to(self, location_id):
         distance = data.distances.get_distance(self.current_loc, location_id)
         self.add_distance(distance)
+        print("Distance travelled: " + str(distance))
         time_change = self._calculate_time_change(distance)
         self.add_time(time_change)
         self.current_loc = location_id
@@ -47,7 +49,7 @@ class Truck():
             package = self.packages.search(k).value
             package.status = Status.EN_ROUTE
 
-        # O(n)
+        # O(n)d
         # Deliver packages
         for next in self.path:
             package = self.packages.search(next).value
@@ -56,7 +58,8 @@ class Truck():
             package.check_on_time()
             print("Truck " + str(self.id) + " delivered package "
                   + str(package.id) + " to location id "
-                  + str(package.location_id))
+                  + str(package.location_id) + ". Distance total: "
+                  + str(self.total_distance))
 
         if self.is_returning:
             self.go_to(data.HUB_ID)

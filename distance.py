@@ -1,4 +1,5 @@
 import csv
+from decimal import Decimal
 
 
 class DistanceList():
@@ -10,8 +11,8 @@ class DistanceList():
         self._load_list(filename)
 
     def add_distance(self, loc_id1, loc_id2, distance):
-        self.all[loc_id1][loc_id2] = float(distance)
-        self.all[loc_id2][loc_id1] = float(distance)
+        self.all[loc_id1][loc_id2] = Decimal(distance)
+        self.all[loc_id2][loc_id1] = Decimal(distance)
 
     def get_distance(self, loc_id1, loc_id2):
         return self.all[loc_id1][loc_id2]
@@ -26,4 +27,4 @@ class DistanceList():
                     if i == 0:
                         continue
                     else:
-                        self.add_distance(id1, i, float(distance))
+                        self.add_distance(id1, i, Decimal(distance))

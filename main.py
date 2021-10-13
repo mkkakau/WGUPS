@@ -1,9 +1,10 @@
 # Melanie Akau 000715019
 from truck import Truck
 import data
+from decimal import Decimal
 
 from datetime import time, date, datetime
-total_distance = 0.0
+total_distance = Decimal(0.0)
 
 truck1 = Truck(1, data.packages.get(1), datetime.combine(
     date.today(), time(hour=8)), True)
