@@ -40,9 +40,13 @@ class Package():
         self.delivery_time = None
 
     def _convert_deadline(self, deadline):
-        format_data = "%H:%M %p"
-        time = datetime.strptime(deadline, format_data).time()
-        formatted = datetime.combine(datetime.now(), time)
+        today = date.today()
+        if deadline == "EOD":
+            dl = time(hour=23, minute=59, second=59)
+        else:
+            format = "%H:%M %p"
+            dl = datetime.strptime(deadline, format).time()
+        formatted = datetime.combine(today, dl)
         return formatted
 
     def _get_priority(self, deadline):
