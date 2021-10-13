@@ -11,6 +11,12 @@ class Priority(Enum):
     MEDIUM = 2
     LOW = 1
 
+    def __repr__(self):
+        return self.name
+
+    def __str__(self):
+        return self.__repr__()
+
 
 class Status(Enum):
     """An enumerator representing package delivery status."""
