@@ -59,6 +59,12 @@ class Truck():
         if self.is_returning:
             self.go_to(data.HUB_ID)
 
+        self.print_completion()
+
+    def print_completion(self):
+        print("Truck " + str(self.id) + " completed at: " + str(self.end_time))
+        print("Distance travelled:  " + str(self.total_distance))
+
     def print_packages(self, time):
         for i in self.path:
             pkg = self.packages.search(i).value
