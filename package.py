@@ -36,8 +36,9 @@ class Status(Enum):
 class Package():
     """A class representing a Package"""
 
-    def __init__(self, id, location_id, deadline, mass, note=""):
+    def __init__(self, id, truck_id, location_id, deadline, mass, note=""):
         self.id = int(id)
+        self.truck_id = int(truck_id)
         self.location_id = int(location_id)
         self.deadline = self._convert_deadline(deadline)
         self.mass = mass
@@ -79,6 +80,7 @@ class Package():
         location = data.locations.get(self.location_id)
         dt_format = "%H:%M:%S"
         formatted = ""
+        formatted += f"{self.truck_id:>5}" + "  "
         formatted += f"{self.id:0>2}" + "  "
         formatted += f"{location.address:<38}" + "  "
         formatted += f"{location.city:<16}" + "  "
@@ -117,7 +119,7 @@ class PackageList():
                 mass = row[3]
                 note = row[4]
                 truck = int(row[5])
-                package = Package(id, location_id, deadline, mass, note)
+                package = Package(id, truck, location_id, deadline, mass, note)
                 if truck == 1:
                     truck1.insert(id, package)
                 elif truck == 2:
