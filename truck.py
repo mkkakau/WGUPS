@@ -58,3 +58,17 @@ class Truck():
 
         if self.is_returning:
             self.go_to(data.HUB_ID)
+
+    def print_packages(self, time):
+        for i in self.path:
+            pkg = self.packages.search(i).value
+            time_pkg = pkg
+            if self.start_time > time:
+                time_pkg.status = Status.AT_THE_HUB
+            else:
+                time_pkg.status = Status.EN_ROUTE
+            if pkg.delivery_time > time:
+                time_pkg.delivery_time = None
+            else:
+                time_pkg.status = Status.DELIVERED
+            print(time_pkg)
