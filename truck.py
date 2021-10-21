@@ -78,4 +78,4 @@ class Truck():
                 time_pkg.delivery_time = None
             else:
                 time_pkg.status = Status.DELIVERED
-            print(time_pkg)
+            time_pkg.print_package(time)

@@ -46,6 +46,9 @@ class Package():
         self.priority = self._get_priority(self.deadline)
         self.status = Status.AT_THE_HUB
         self.delivery_time = None
+        self.is_corrected = False
+        self.corrected_location_id = None
+        self.correction_time = None
 
     def _convert_deadline(self, deadline):
         today = date.today()
@@ -70,14 +73,23 @@ class Package():
         self.delivery_time = time
         self.status = Status.DELIVERED
 
+    def correct_location(self, corrected_location_id, correction_time):
+        self.is_corrected = True
+        self.corrected_location_id = corrected_location_id
+        self.correction_time = correction_time
+
     def check_on_time(self):
         if self.delivery_time is None:
             print("Package has not been delivered. Cannot calculate on_time()")
         if self.delivery_time > self.deadline:
             print("Package " + str(self.id) + " did not meet deadline.")
 
-    def __repr__(self):
-        location = data.locations.get(self.location_id)
+    def print_package(self, time):
+        if(self.is_corrected and time >= self.correction_time):
+            location = data.locations.get(self.corrected_location_id)
+        else:
+            location = data.locations.get(self.location_id)
+
         dt_format = "%H:%M:%S"
         formatted = ""
         formatted += f"{self.truck_id:>5}" + "  "
@@ -90,10 +102,7 @@ class Package():
         formatted += f"{self.status:<9}" + "  "
         if self.delivery_time is not None:
             formatted += f"{self.delivery_time.strftime(dt_format)}"
-        return formatted
-
-    def __str__(self):
-        return self.__repr__()
+        print(formatted)
 
 
 class PackageList():

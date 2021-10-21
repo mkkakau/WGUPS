@@ -19,7 +19,8 @@ truck3 = Truck(3, data.packages.get(3), datetime.combine(
 truck1.start()
 truck2.start()
 print("Updating package 9 location address")
-data.packages.get(3).search(9).value.location_id = 20
+time_corrected = datetime.combine(date.today(), time(hour=10, minute=20))
+data.packages.get(3).search(9).value.correct_location(20, time_corrected)
 truck3.start()
 
 total_distance += truck2.total_distance
@@ -52,7 +53,6 @@ def cmd_menu():
 
 def cmd_lookup():
     pkg_id = input("Input package id: ")
-
 
 
 def cmd_status():
