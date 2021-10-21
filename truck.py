@@ -3,6 +3,7 @@ import data
 from decimal import Decimal
 import nearestneighbor as nn
 from package import Status
+import copy
 
 
 class Truck():
@@ -68,7 +69,7 @@ class Truck():
     def print_packages(self, time):
         for i in self.path:
             pkg = self.packages.search(i).value
-            time_pkg = pkg
+            time_pkg = copy.copy(pkg)
             if self.start_time > time:
                 time_pkg.status = Status.AT_THE_HUB
             else:
