@@ -6,6 +6,7 @@ from decimal import Decimal
 from datetime import time, date, datetime
 
 total_distance = Decimal(0.0)
+command = ""
 
 truck1 = Truck(1, data.packages.get(1), datetime.combine(
     date.today(), time(hour=8)), True)
@@ -34,12 +35,53 @@ def print_package_status_at(time):
           + "      Zip    " "Mass  Deadline  Status     Delivery Time")
     print("-----  --  --------------------------------------  ------------"
           + "----  -----  ----  --------  ---------  -------------")
-    truck1.print_packages(time_to_check)
+    truck1.print_packages(time)
     print("")
-    truck2.print_packages(time_to_check)
+    truck2.print_packages(time)
     print("")
-    truck3.print_packages(time_to_check)
+    truck3.print_packages(time)
 
 
-time_to_check = datetime.combine(date.today(), time(hour=10, minute=35))
-print_package_status_at(time_to_check)
+def cmd_menu():
+    print("Command Menu:")
+    print("1) lookup")
+    print("2) status")
+    print("3) menu")
+    print("4) exit")
+
+
+def cmd_lookup():
+    pkg_id = input("Input package id: ")
+
+
+
+def cmd_status():
+    try:
+        timeformat = "%H:%M"
+        my_time = input("Enter a time in military format (HH:MM): ")
+        validtime = datetime.strptime(my_time, timeformat).time()
+        time_to_check = datetime.combine(date.today(), validtime)
+        print_package_status_at(time_to_check)
+    except ValueError:
+        print("Invalid time")
+
+
+def process_command(command):
+    if(command == "lookup" or command == "1"):
+        cmd_lookup()
+    elif(command == "status" or command == "2"):
+        cmd_status()
+    elif(command == "menu" or command == "3"):
+        cmd_menu()
+    elif(command == "exit" or command == "4"):
+        print("Exiting program")
+        command = "exit"
+    else:
+        print("Invalid command")
+
+
+cmd_menu()
+
+while(True):
+    command = input("Enter a command: ")
+    process_command(command)
