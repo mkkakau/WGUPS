@@ -75,7 +75,7 @@ def process_command(command):
         cmd_menu()
     elif(command == "exit" or command == "4"):
         print("Exiting program")
-        command = "exit"
+        quit()
     else:
         print("Invalid command")
 
