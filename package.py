@@ -40,6 +40,7 @@ class Package():
         self.id = int(id)
         self.truck_id = int(truck_id)
         self.location_id = int(location_id)
+        self.location = data.locations.get(location_id)
         self.deadline = self._convert_deadline(deadline)
         self.mass = mass
         self.note = note
@@ -114,9 +115,7 @@ class PackageList():
 
     def _load_list(self, filename):
 
-        truck1 = HashTable()
-        truck2 = HashTable()
-        truck3 = HashTable()
+        table = HashTable()
 
         with open(filename) as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
@@ -129,17 +128,64 @@ class PackageList():
                 note = row[4]
                 truck = int(row[5])
                 package = Package(id, truck, location_id, deadline, mass, note)
-                if truck == 1:
-                    truck1.insert(id, package)
-                elif truck == 2:
-                    truck2.insert(id, package)
-                elif truck == 3:
-                    truck3.insert(id, package)
-                else:
-                    print("Unassigned package" + str(package))
-        list = [None, truck1, truck2, truck3]
-        return list
+                table.insert(id, package)
+        return table
 
-    # O(1)
-    def get(self, truck_id):
-        return self.all[truck_id]
+    def get_truck(self, truck_id):
+        packages = HashTable()
+        for p in self.all.get_keys():
+            package = self.all.search(p).value
+            if package.truck_id == truck_id:
+                packages.insert(p, package)
+        return packages
+
+    def get_id(self, id):
+        return self.all.search(id).value
+
+    def get_address(self, address):
+        packages = HashTable()
+        for p in self.all.get_keys():
+            package = self.all.search(p).value
+            if package.location.address == address:
+                packages.insert(p, package)
+        return packages
+
+    def get_deadline(self, deadline):
+        packages = HashTable()
+        for p in self.all.get_keys():
+            package = self.all.search(p).value
+            if package.deadline == deadline:
+                packages.insert(p, package)
+        return packages
+
+    def get_city(self, city):
+        packages = HashTable()
+        for p in self.all.get_keys():
+            package = self.all.search(p).value
+            if package.location.city == city:
+                packages.insert(p, package)
+        return packages
+
+    def get_zipcode(self, zipcode):
+        packages = HashTable()
+        for p in self.all.get_keys():
+            package = self.all.search(p).value
+            if package.location.zipcode == zipcode:
+                packages.insert(p, package)
+        return packages
+
+    def get_mass(self, mass):
+        packages = HashTable()
+        for p in self.all.get_keys():
+            package = self.all.search(p).value
+            if package.mass == mass:
+                packages.insert(p, package)
+        return packages
+
+    def get_status(self, status):
+        packages = HashTable()
+        for p in self.all.get_keys():
+            package = self.all.search(p).value
+            if package.status == status:
+                packages.insert(p, package)
+        return packages

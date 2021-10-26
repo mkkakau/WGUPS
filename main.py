@@ -8,11 +8,11 @@ from datetime import time, date, datetime
 total_distance = Decimal(0.0)
 command = ""
 
-truck1 = Truck(1, data.packages.get(1), datetime.combine(
+truck1 = Truck(1, data.packages.get_truck(1), datetime.combine(
     date.today(), time(hour=8)), True)
-truck2 = Truck(2, data.packages.get(2), datetime.combine(
+truck2 = Truck(2, data.packages.get_truck(2), datetime.combine(
     date.today(), time(hour=9, minute=5)))
-truck3 = Truck(3, data.packages.get(3), datetime.combine(
+truck3 = Truck(3, data.packages.get_truck(3), datetime.combine(
     date.today(), time(hour=10, minute=20)))
 
 
@@ -20,7 +20,7 @@ truck1.start()
 truck2.start()
 print("Updating package 9 location address")
 time_corrected = datetime.combine(date.today(), time(hour=10, minute=20))
-data.packages.get(3).search(9).value.correct_location(20, time_corrected)
+data.packages.get_id(9).correct_location(20, time_corrected)
 truck3.start()
 
 total_distance += truck2.total_distance
