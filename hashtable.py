@@ -9,6 +9,7 @@ class HashTable:
         self.initial_size = initial_size
         self.buckets = []
         self.keys = []
+        self.is_empty = True
         for i in range(0, self.initial_size):
             new_bucket = []
             self.buckets.append(new_bucket)
@@ -28,6 +29,7 @@ class HashTable:
 
     # O(n)
     def insert(self, key, value):
+        self.is_empty = False
         bucket_list = self.get_bucket(key)
         for b in bucket_list:
             if b.key == key:

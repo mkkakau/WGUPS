@@ -85,7 +85,10 @@ class Package():
         if self.delivery_time > self.deadline:
             print("Package " + str(self.id) + " did not meet deadline.")
 
-    def print_package(self, time):
+    def print_package(self, time=datetime.combine(date.today(),
+                                                  time(hour=23,
+                                                       minute=59,
+                                                       second=59))):
         if(self.is_corrected and time >= self.correction_time):
             location = data.locations.get(self.corrected_location_id)
         else:
@@ -140,7 +143,10 @@ class PackageList():
         return packages
 
     def get_id(self, id):
-        return self.all.search(id).value
+        package = self.all.search(id)
+        if package is None:
+            raise ValueError
+        return package.value
 
     def get_address(self, address):
         packages = HashTable()

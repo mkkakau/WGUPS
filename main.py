@@ -3,6 +3,8 @@ import data
 from decimal import Decimal
 from truck import Truck
 from datetime import time, date, datetime
+from hashtable import HashTable
+from package import Status
 
 
 def main():
@@ -27,14 +29,9 @@ def main():
     # Print total distance travelled
     print_total_distance(trucks)
 
-    # Display command menu
-    cmd_menu()
-
     # Wait for input and process command
-    command = ""
     while(True):
-        command = input("Enter a command: ")
-        process_command(command, trucks)
+        process_command(trucks)
 
 
 def start_trucks(trucks):
@@ -42,9 +39,11 @@ def start_trucks(trucks):
         truck.start()
 
 
-def process_command(command, trucks):
+def process_command(trucks):
+    cmd_menu()
+    command = input("Enter a command: ").lower()
     if(command == "lookup" or command == "1"):
-        cmd_lookup()
+        process_lookup_command()
     elif(command == "status" or command == "2"):
         cmd_status(trucks)
     elif(command == "menu" or command == "3"):
@@ -56,9 +55,77 @@ def process_command(command, trucks):
         print("Invalid command")
 
 
-def cmd_lookup():
-    pkg_id = input("Input package id: ")
-    print("TODO: " + str(pkg_id))
+def process_lookup_command():
+    cmd_lookup_menu()
+    command = input("Enter a field to lookup: ").lower()
+    packages = HashTable()
+    if(command == "1" or command == "id"):
+        packages = lookup_pkgs_id()
+    elif(command == "2" or command == "address"):
+        packages = lookup_pkgs_address()
+    elif(command == "3" or command == "deadline"):
+        packages = lookup_pkgs_deadline()
+    elif(command == "4" or command == "city"):
+        packages = lookup_pkgs_city()
+    elif(command == "5" or command == "zipcode"):
+        packages = lookup_pkgs_zipcode()
+    elif(command == "6" or command == "mass"):
+        packages = lookup_pkgs_mass()
+    elif(command == "7" or command == "status"):
+        packages = lookup_pkgs_status()
+    else:
+        print("Invalid command")
+
+    print_header()
+    if packages.is_empty:
+        print("No packages found.")
+    else:
+        print_lookup(packages)
+
+
+def lookup_pkgs_id():
+    packages = HashTable()
+    try:
+        id = int(input("Enter id: "))
+        packages.insert(id, data.packages.get_id(id))
+    except ValueError:
+        print("Invalid id")
+    return packages
+
+
+def lookup_pkgs_address():
+    address = input("Enter address: ")
+    return data.packages.get_address(address)
+
+
+def lookup_pkgs_deadline():
+    try:
+        timeformat = "%H:%M"
+        my_time = input("Enter a time in military format (HH:MM): ")
+        validtime = datetime.strptime(my_time, timeformat).time()
+        time_to_check = datetime.combine(date.today(), validtime)
+        return data.packages.get_deadline(time_to_check)
+    except ValueError:
+        print("Invalid time")
+
+
+def lookup_pkgs_city():
+    city = input("Enter city: ")
+    return data.packages.get_city(city)
+
+
+def lookup_pkgs_zipcode():
+    zipcode = input("Enter zipcode: ")
+    return data.packages.get_zipcode(zipcode)
+
+
+def lookup_pkgs_mass():
+    mass = input("Input mass: ")
+    return data.packages.get_mass(mass)
+
+
+def lookup_pkgs_status():
+    return data.packages.get_status(Status.DELIVERED)
 
 
 def cmd_status(trucks):
@@ -74,14 +141,31 @@ def cmd_status(trucks):
 
 
 def cmd_menu():
+    print("")
     print("Command Menu:")
     print("1) lookup")
     print("2) status")
     print("3) menu")
     print("4) exit")
+    print("")
 
 
-def print_header(my_time):
+def cmd_lookup_menu():
+    print("")
+    print("Lookup packages by:")
+    print("1) ID")
+    print("2) Address")
+    print("3) Deadline")
+    print("4) City")
+    print("5) Zipcode")
+    print("6) Mass")
+    print("7) Status")
+    print("")
+
+
+def print_header(my_time=datetime.combine(date.today(), time(hour=23,
+                                                             minute=59,
+                                                             second=59))):
     print("")
     print("PACKAGE STATUS AT: " + str(my_time))
     print("Truck  ID  Address                                 City        "
@@ -101,6 +185,12 @@ def print_total_distance(trucks):
     for truck in trucks:
         total_distance += truck.total_distance
     print("Total distance travelled: " + str(total_distance))
+
+
+def print_lookup(packages):
+    for key in packages.get_keys():
+        package = packages.search(key).value
+        package.print_package()
 
 
 if __name__ == "__main__":
