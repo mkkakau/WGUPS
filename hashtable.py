@@ -40,7 +40,8 @@ class HashTable:
         self.keys.append(key)
         return True
 
-    # O(n)
+    # O(n) In the worst case scenario where each package is stored
+    # in one bucket
     def search(self, key):
         bucket_list = self.get_bucket(key)
         for b in bucket_list:

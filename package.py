@@ -5,6 +5,7 @@ import data
 import csv
 
 
+# O(1)
 class Priority(Enum):
     """An enumerator representing package priority"""
 
@@ -19,6 +20,7 @@ class Priority(Enum):
         return self.__repr__()
 
 
+# O(1)
 class Status(Enum):
     """An enumerator representing package delivery status."""
 
@@ -36,6 +38,8 @@ class Status(Enum):
 class Package():
     """A class representing a Package"""
 
+    # O(1)
+    # Constructor
     def __init__(self, id, truck_id, location_id, deadline, mass, note=""):
         self.id = int(id)
         self.truck_id = int(truck_id)
@@ -51,6 +55,8 @@ class Package():
         self.corrected_location_id = None
         self.correction_time = None
 
+    # O(1)
+    # Takes the time string from file and converts to datetime object
     def _convert_deadline(self, deadline):
         today = date.today()
         if deadline == "EOD":
@@ -61,6 +67,7 @@ class Package():
         formatted = datetime.combine(today, dl)
         return formatted
 
+    # O(1)
     def _get_priority(self, deadline):
         priority = Priority.LOW
         today = date.today()
@@ -70,21 +77,26 @@ class Package():
             priority = Priority.MEDIUM
         return priority
 
+    # O(1)
     def set_delivered(self, time):
         self.delivery_time = time
         self.status = Status.DELIVERED
 
+    # O(1)
     def correct_location(self, corrected_location_id, correction_time):
         self.is_corrected = True
         self.corrected_location_id = corrected_location_id
         self.correction_time = correction_time
 
+    # O(1)
     def check_on_time(self):
         if self.delivery_time is None:
             print("Package has not been delivered. Cannot calculate on_time()")
         if self.delivery_time > self.deadline:
             print("Package " + str(self.id) + " did not meet deadline.")
 
+    # O(1)
+    # Format and print the package given a time that defaults to EOD
     def print_package(self, time=datetime.combine(date.today(),
                                                   time(hour=23,
                                                        minute=59,
@@ -112,10 +124,14 @@ class Package():
 class PackageList():
     """A class representing a list of packages."""
 
+    # O(n)
+    # Constructor
     def __init__(self, filename):
         self.filename = filename
         self.all = self._load_list(filename)
 
+    # O(n)
+    # Load the packages from the csv file
     def _load_list(self, filename):
 
         table = HashTable()
@@ -134,6 +150,8 @@ class PackageList():
                 table.insert(id, package)
         return table
 
+    # O(n)
+    # Find packages with the given truck id
     def get_truck(self, truck_id):
         packages = HashTable()
         for p in self.all.get_keys():
@@ -142,12 +160,17 @@ class PackageList():
                 packages.insert(p, package)
         return packages
 
+    # O(n)
+    # Find the package with the given id
     def get_id(self, id):
+        # O(n)
         package = self.all.search(id)
         if package is None:
             raise ValueError
         return package.value
 
+    # O(n)
+    # Find packages with the given address
     def get_address(self, address):
         packages = HashTable()
         for p in self.all.get_keys():
@@ -156,6 +179,8 @@ class PackageList():
                 packages.insert(p, package)
         return packages
 
+    # O(n)
+    # Find packages with the given deadline
     def get_deadline(self, deadline):
         packages = HashTable()
         for p in self.all.get_keys():
@@ -164,6 +189,8 @@ class PackageList():
                 packages.insert(p, package)
         return packages
 
+    # O(n)
+    # Find packages with the given city
     def get_city(self, city):
         packages = HashTable()
         for p in self.all.get_keys():
@@ -172,6 +199,8 @@ class PackageList():
                 packages.insert(p, package)
         return packages
 
+    # O(n)
+    # Find packages with the given zipcode
     def get_zipcode(self, zipcode):
         packages = HashTable()
         for p in self.all.get_keys():
@@ -180,6 +209,8 @@ class PackageList():
                 packages.insert(p, package)
         return packages
 
+    # O(n)
+    # Find packages with the given mass
     def get_mass(self, mass):
         packages = HashTable()
         for p in self.all.get_keys():
@@ -188,6 +219,8 @@ class PackageList():
                 packages.insert(p, package)
         return packages
 
+    # O(n)
+    # Find packages with the given status
     def get_status(self, status):
         packages = HashTable()
         for p in self.all.get_keys():

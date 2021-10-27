@@ -9,6 +9,7 @@ from package import Status
 
 def main():
 
+    # O(n^2)
     # Initialize trucks
     truck1 = Truck(1, data.packages.get_truck(1), datetime.combine(
         date.today(), time(hour=8)), True)
@@ -18,14 +19,17 @@ def main():
         date.today(), time(hour=10, minute=20)))
     trucks = [truck1, truck2, truck3]
 
+    # O(1)
     # Update package 9 location to correct address
     print("Updating package 9 location address")
     time_corrected = datetime.combine(date.today(), time(hour=10, minute=20))
     data.packages.get_id(9).correct_location(20, time_corrected)
 
+    # O(1)
     # Start the trucks
     start_trucks(trucks)
 
+    # O(1)
     # Print total distance travelled
     print_total_distance(trucks)
 
@@ -34,6 +38,7 @@ def main():
         process_command(trucks)
 
 
+# O(1)
 def start_trucks(trucks):
     for truck in trucks:
         truck.start()
@@ -46,15 +51,14 @@ def process_command(trucks):
         process_lookup_command()
     elif(command == "status" or command == "2"):
         cmd_status(trucks)
-    elif(command == "menu" or command == "3"):
-        cmd_menu()
-    elif(command == "exit" or command == "4"):
+    elif(command == "exit" or command == "3"):
         print("Exiting program")
         quit()
     else:
         print("Invalid command")
 
 
+# O(n)
 def process_lookup_command():
     cmd_lookup_menu()
     command = input("Enter a field to lookup: ").lower()
@@ -99,12 +103,17 @@ def lookup_pkgs_address():
 
 
 def lookup_pkgs_deadline():
+    time_to_check = get_time()
+    return data.packages.get_deadline(time_to_check)
+
+
+def get_time():
     try:
-        timeformat = "%H:%M"
         my_time = input("Enter a time in military format (HH:MM): ")
+        timeformat = "%H:%M"
         validtime = datetime.strptime(my_time, timeformat).time()
         time_to_check = datetime.combine(date.today(), validtime)
-        return data.packages.get_deadline(time_to_check)
+        return time_to_check
     except ValueError:
         print("Invalid time")
 
@@ -129,15 +138,13 @@ def lookup_pkgs_status():
 
 
 def cmd_status(trucks):
-    try:
-        timeformat = "%H:%M"
-        my_time = input("Enter a time in military format (HH:MM): ")
-        validtime = datetime.strptime(my_time, timeformat).time()
-        time_to_check = datetime.combine(date.today(), validtime)
-        print_header(time_to_check)
-        print_package_status_at(time_to_check, trucks)
-    except ValueError:
-        print("Invalid time")
+
+    time_to_check = get_time()
+    print_header(time_to_check)
+    print_package_status_at(time_to_check, trucks)
+
+# O(1)
+# Prints the main command menu
 
 
 def cmd_menu():
@@ -145,9 +152,11 @@ def cmd_menu():
     print("Command Menu:")
     print("1) lookup")
     print("2) status")
-    print("3) menu")
-    print("4) exit")
+    print("3) exit")
     print("")
+
+# O(1)
+# Prints the menu of commands avaiable from the lookup function
 
 
 def cmd_lookup_menu():
@@ -163,6 +172,8 @@ def cmd_lookup_menu():
     print("")
 
 
+# O(1)
+# The header for the package table
 def print_header(my_time=datetime.combine(date.today(), time(hour=23,
                                                              minute=59,
                                                              second=59))):
@@ -174,12 +185,16 @@ def print_header(my_time=datetime.combine(date.today(), time(hour=23,
           + "----  -----  ----  --------  ---------  -------------")
 
 
+# O(n^2)
+# Print the package status at a given time from all trucks
 def print_package_status_at(my_time, trucks):
     for truck in trucks:
         truck.print_packages(my_time)
         print("")
 
 
+# O(t)
+# Prints the total distance travelled from all trucks
 def print_total_distance(trucks):
     total_distance = Decimal(0.0)
     for truck in trucks:
@@ -187,6 +202,8 @@ def print_total_distance(trucks):
     print("Total distance travelled: " + str(total_distance))
 
 
+# O(n^2)
+# Prints a hashtable of packages
 def print_lookup(packages):
     for key in packages.get_keys():
         package = packages.search(key).value

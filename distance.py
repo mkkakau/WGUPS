@@ -14,9 +14,11 @@ class DistanceList():
         self.all[loc_id1][loc_id2] = Decimal(distance)
         self.all[loc_id2][loc_id1] = Decimal(distance)
 
+    # O(1)
     def get_distance(self, loc_id1, loc_id2):
         return self.all[loc_id1][loc_id2]
 
+    # O(n)
     def _load_list(self, filename):
         with open(filename) as csv_file:
             reader = csv.reader(csv_file, delimiter=",")

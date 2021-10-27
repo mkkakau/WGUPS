@@ -34,9 +34,11 @@ class LocationList():
     def add_location(self, location):
         self.all[int(location.id)] = location
 
+    # O(1)
     def get(self, id):
         return self.all[id]
 
+    # O(l^2)
     def _load_list(self, filename):
         with open(filename) as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
