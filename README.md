@@ -1,6 +1,26 @@
 # WGUPS
+This is a project written in Python for my Computer Science course at Western Governor's University. 
 
-## INTRODUCTION
+In this project, I learned:
+- Object-Oriented Programming in Python
+- How to create my own HashTable class
+- How to use the Nearest Neighbor algorithm to estimate shortest delivery routes
+- Space-time Complexity Analysis (Big-O Notation)
+
+## How to Run:
+1. Make sure [Python](https://www.python.org/downloads/) is installed and added to your PATH
+2. Clone this github repository
+``` bash
+git clone "https://github.com/mkkakau/WGUPS.git"
+```
+3. Go to the WGUPS directory and Run
+``` bash
+python main.py
+```
+
+## PROJECT REQUIREMENTS:
+
+### Introduction
 For this assessment, you will apply the algorithms and data structures you studied in this course to solve a real programming problem. You will also implement an algorithm to route delivery trucks that will allow you to meet all delivery constraints while traveling under 140 miles. You will then describe and justify the decisions you made while creating this program.
 
 The skills you showcase in your completed project may be useful in responding to technical interview questions for future employment. This project may also be added to your portfolio to show to future employers.
@@ -12,7 +32,7 @@ Your task is to determine an algorithm, write code, and present a solution where
 
 Keep in mind that the supervisor should be able to see, at assigned points, the progress of each truck and its packages by any of the variables listed in the “WGUPS Package File,” including what has been delivered and at what time the delivery occurred.
 
-## ASSUMPTIONS
+### Assumptions
 - Each truck can carry a maximum of 16 packages, and the ID number of each package is unique.
 - The trucks travel at an average speed of 18 miles per hour and have an infinite amount of gas with no need to stop.
 - There are no collisions.
@@ -24,7 +44,7 @@ Keep in mind that the supervisor should be able to see, at assigned points, the 
 - The distances provided in the WGUPS Distance Table are equal regardless of the direction traveled.
 - The day ends when all 40 packages have been delivered.
 
-## REQUIREMENTS
+### Requirements
 Your submission must be your original work. No more than a combined total of 30% of the submission and no more than a 10% match to any one individual source can be directly quoted or closely paraphrased from sources, even if cited correctly. An originality report is provided when you submit your task that can be used as a guide.
 
 You must use the rubric to direct the creation of your submission because it provides detailed criteria that will be used to evaluate your work. Each requirement below may be evaluated by more than one rubric aspect. The rubric aspect titles may contain hyperlinks to relevant portions of the course.
