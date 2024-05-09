@@ -7,6 +7,9 @@ In this project, I learned:
 - How to use the Nearest Neighbor algorithm to estimate shortest delivery routes
 - Space-time Complexity Analysis (Big-O Notation)
 
+Screenshot:
+![CLI](images/interface.png)
+
 ## How to Run:
 1. Make sure [Python](https://www.python.org/downloads/) is installed and added to your PATH
 2. Clone this github repository
